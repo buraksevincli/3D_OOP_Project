@@ -38,12 +38,14 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private void OnEnable()
         {
             GameManager.Instance.OnGameOver += HandleOnEventTriggered;
+            GameManager.Instance.OnMissionSucceed += HandleOnEventTriggered;
         }
 
         
         private void OnDisable()
         {
             GameManager.Instance.OnGameOver -= HandleOnEventTriggered;
+            GameManager.Instance.OnMissionSucceed -= HandleOnEventTriggered;
         }
 
         private void FixedUpdate()

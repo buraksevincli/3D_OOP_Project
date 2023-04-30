@@ -21,6 +21,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
             {
                 fireworks.SetActive(true);
                 lights.SetActive(true);
+                GameManager.Instance.MissonSucceed();
             }
             else
             {
