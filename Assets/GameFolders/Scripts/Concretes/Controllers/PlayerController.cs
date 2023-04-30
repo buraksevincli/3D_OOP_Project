@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using GameFolders.Scripts.Concretes.Inputs;
+using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
 
@@ -17,6 +16,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private Rotator _rotator;
         private Fuel _fuel;
 
+        private bool _canMove;
         private bool _canForceUp;
         private float _leftRight;
         public float TurnSpeed => turnSpeed;
@@ -28,6 +28,22 @@ namespace GameFolders.Scripts.Concretes.Controllers
             _mover = new Mover(this);
             _rotator = new Rotator(this);
             _fuel = GetComponent<Fuel>();
+        }
+
+        private void Start()
+        {
+            _canMove = true;
+        }
+
+        private void OnEnable()
+        {
+            GameManager.Instance.OnGameOver += HandleOnEventTriggered;
+        }
+
+        
+        private void OnDisable()
+        {
+            GameManager.Instance.OnGameOver -= HandleOnEventTriggered;
         }
 
         private void FixedUpdate()
@@ -43,6 +59,8 @@ namespace GameFolders.Scripts.Concretes.Controllers
 
         private void Update()
         {
+            if (!_canMove) return;
+            
             if (_input.IsForceUp && !_fuel.IsEmpty)
             {
                 _canForceUp = true;
@@ -55,6 +73,15 @@ namespace GameFolders.Scripts.Concretes.Controllers
 
             _leftRight = _input.LeftRight;
         }
+        
+        private void HandleOnEventTriggered()
+        {
+            _canMove = false;
+            _canForceUp = false;
+            _leftRight = 0f;
+            _fuel.FuelIncrease(0f);
+        }
+
     }
 }
 
