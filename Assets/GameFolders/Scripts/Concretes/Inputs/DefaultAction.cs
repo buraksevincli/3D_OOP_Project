@@ -37,6 +37,15 @@ namespace GameFolders.Scripts.Concretes.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftRight"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""21b76f73-ad06-43b8-9a23-b1c121d781f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -50,6 +59,39 @@ namespace GameFolders.Scripts.Concretes.Inputs
                     ""action"": ""ForceUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""AD"",
+                    ""id"": ""56c8a4a7-6826-49ce-8b09-21bf1645a9e3"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""211ba1e6-f65c-4be3-bdd0-774c4cedacaa"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b70ee118-e10b-42f9-842d-f595ef13b8c8"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -59,6 +101,7 @@ namespace GameFolders.Scripts.Concretes.Inputs
             // Rocket
             m_Rocket = asset.FindActionMap("Rocket", throwIfNotFound: true);
             m_Rocket_ForceUp = m_Rocket.FindAction("ForceUp", throwIfNotFound: true);
+            m_Rocket_LeftRight = m_Rocket.FindAction("LeftRight", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -121,11 +164,13 @@ namespace GameFolders.Scripts.Concretes.Inputs
         private readonly InputActionMap m_Rocket;
         private List<IRocketActions> m_RocketActionsCallbackInterfaces = new List<IRocketActions>();
         private readonly InputAction m_Rocket_ForceUp;
+        private readonly InputAction m_Rocket_LeftRight;
         public struct RocketActions
         {
             private @DefaultAction m_Wrapper;
             public RocketActions(@DefaultAction wrapper) { m_Wrapper = wrapper; }
             public InputAction @ForceUp => m_Wrapper.m_Rocket_ForceUp;
+            public InputAction @LeftRight => m_Wrapper.m_Rocket_LeftRight;
             public InputActionMap Get() { return m_Wrapper.m_Rocket; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -138,6 +183,9 @@ namespace GameFolders.Scripts.Concretes.Inputs
                 @ForceUp.started += instance.OnForceUp;
                 @ForceUp.performed += instance.OnForceUp;
                 @ForceUp.canceled += instance.OnForceUp;
+                @LeftRight.started += instance.OnLeftRight;
+                @LeftRight.performed += instance.OnLeftRight;
+                @LeftRight.canceled += instance.OnLeftRight;
             }
 
             private void UnregisterCallbacks(IRocketActions instance)
@@ -145,6 +193,9 @@ namespace GameFolders.Scripts.Concretes.Inputs
                 @ForceUp.started -= instance.OnForceUp;
                 @ForceUp.performed -= instance.OnForceUp;
                 @ForceUp.canceled -= instance.OnForceUp;
+                @LeftRight.started -= instance.OnLeftRight;
+                @LeftRight.performed -= instance.OnLeftRight;
+                @LeftRight.canceled -= instance.OnLeftRight;
             }
 
             public void RemoveCallbacks(IRocketActions instance)
@@ -165,6 +216,7 @@ namespace GameFolders.Scripts.Concretes.Inputs
         public interface IRocketActions
         {
             void OnForceUp(InputAction.CallbackContext context);
+            void OnLeftRight(InputAction.CallbackContext context);
         }
     }
 }
