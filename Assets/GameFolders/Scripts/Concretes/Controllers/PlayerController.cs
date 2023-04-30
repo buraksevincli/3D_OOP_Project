@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameFolders.Scripts.Concretes.Inputs;
+using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
 
 namespace GameFolders.Scripts.Concretes.Controllers
@@ -10,22 +11,22 @@ namespace GameFolders.Scripts.Concretes.Controllers
     {
         [SerializeField] private float force;
         
-        private Rigidbody _rigidbody;
         private DefaultInput _input;
+        private Mover _mover;
 
         private bool _isForceUp;
         
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _input = new DefaultInput();
+            _mover = new Mover(GetComponent<Rigidbody>());
         }
 
         private void FixedUpdate()
         {
             if (_isForceUp)
             {
-                _rigidbody.AddForce(Vector3.up * (Time.deltaTime * force));
+                _mover.FixedTick();
             }
         }
 
