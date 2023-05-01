@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using GameFolders.Scripts.Concretes.Controllers;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace GameFolders.Scripts.Concretes.Controllers
+namespace GameFolders.Scripts.Abstracts.Controllers
 {
-    public class WallController : MonoBehaviour
+    public abstract class WallController : MonoBehaviour
     {
         private void OnCollisionEnter(Collision collision)
         {
