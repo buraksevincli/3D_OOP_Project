@@ -15,7 +15,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         {
             PlayerController playerController = collision.collider.GetComponent<PlayerController>();
 
-            if (playerController == null) return;
+            if (playerController == null || !playerController.CanMove) return;
             
             if (collision.GetContact(0).normal.y == -1)
             {

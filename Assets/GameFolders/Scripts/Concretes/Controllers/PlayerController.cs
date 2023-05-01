@@ -21,6 +21,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private float _leftRight;
         public float TurnSpeed => turnSpeed;
         public float Force => force;
+        public bool CanMove => _canMove;
 
         private void Awake()
         {

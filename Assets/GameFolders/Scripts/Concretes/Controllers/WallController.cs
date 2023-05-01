@@ -13,7 +13,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         {
             PlayerController playerController = collision.collider.GetComponent<PlayerController>();
 
-            if (playerController != null)
+            if (playerController != null && playerController.CanMove)
             {
                 GameManager.Instance.GameOver();
             }
