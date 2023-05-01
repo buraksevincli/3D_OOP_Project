@@ -12,6 +12,7 @@ namespace GameFolders.Scripts.Concretes.Movements
         [SerializeField] private ParticleSystem particle;
 
         public bool IsEmpty => currentFuel < 1f;
+        public float CurrentFuel => currentFuel / maxFuel;
 
         private void Awake()
         {
