@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
 
 namespace GameFolders.Scripts.Concretes.Movements
@@ -28,6 +29,8 @@ namespace GameFolders.Scripts.Concretes.Movements
             {
                 particle.Stop();
             }
+            
+            SoundManager.Instance.StopSound(0);
         }
 
         public void FuelDecrease(float decrease)
@@ -39,6 +42,8 @@ namespace GameFolders.Scripts.Concretes.Movements
             {
                 particle.Play();
             }
+
+            SoundManager.Instance.PlaySound(0);
         }
     }
 }
